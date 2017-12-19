@@ -87,7 +87,7 @@ public class Priority {
 			System.out.println("     "+ i +"       \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]+"\t\t"+priority[i]);
 		}
 		
-		System.out.printf("\n\n1Average Turn Around Time:  %.2f \n ", averageWTime/number);
+		System.out.printf("\nAverage Turn Around Time:  %.2f \n", averageWTime/number);
 		
 		System.out.printf("Average Turn Around Time:  %.2f \n", averageTATime/number);
 				

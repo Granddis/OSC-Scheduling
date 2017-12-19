@@ -83,7 +83,7 @@ public class SJF {
 		
 		System.out.println("\n");
 		
-		System.out.printf("\n\n1Average Turn Around Time:  %.2f \n ", averageWTime/number);
+		System.out.printf("\nAverage Turn Around Time:  %.2f \n", averageWTime/number);
 		
 		System.out.printf("Average Turn Around Time:  %.2f \n", averageTATime/number);
 		
