@@ -8,7 +8,7 @@ public class RoundRobin {
 		int waitingTime[], burstTimeInput[], turnaroundTime[], burstTimeOutput[];
 		float averageWTime = 0, averageTATime = 0;	
 
-		System.out.println("-------Round Robin-------s \n"); 
+		System.out.println("-------Round Robin-------- \n"); 
 		
 		Scanner num = new Scanner(System.in);
 		
