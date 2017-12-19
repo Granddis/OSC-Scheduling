@@ -27,7 +27,7 @@ public class FCFS {
 			burstTime[i] = num.nextInt();
 		}
 		
-		long cputimeBefore = System.currentTimeMillis();
+		float CPUtimeBefore = System.currentTimeMillis();
 		
 		waitingTime[0] = 0;
 		
@@ -51,25 +51,29 @@ public class FCFS {
 			averageTATime += turnaroundTime[j]; 
 		}
 		
-		System.out.println("\n====================== TABLE =========================");
+		System.out.println("\n------------------TABLE---------------- \n");
 
-		System.out.print(" ____________________________________________________\n");
+		System.out.print("\n");
 		System.out.println("| Process | BurstTime | WaitingTime | TurnAroundTime |");	
 		
 		for(int i = 0; i < number; i++){
 			System.out.println("      "+ i +" \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]);
 		}
 		
-		System.out.println("\n======================================================");
+		System.out.println("\n");
 		
-		System.out.println("Average Waiting Time : "+ String.format("%.2f", (averageWTime = averageWTime/number)));
+		System.out.printf("\n\n1Average Turn Around Time:  %.2f \n ", averageWTime/number);
 		
-		System.out.println("Average Turn Around Time : "+ String.format("%.2f", (averageTATime = averageTATime/number)));
+		System.out.printf("Average Turn Around Time:  %.2f \n", averageTATime/number);
 		
-		long cputimeAfter = System.currentTimeMillis(); //Get the end time of CPU usage during the program
+		//Get the end time of CPU usage during the program
+		float CPUtimeAfter = System.currentTimeMillis(); 
+				
+		//calculate CPU usage
+		float CPUtimeDifference = CPUtimeAfter - CPUtimeBefore; 
 		
-		long cputimeDifference = cputimeAfter - cputimeBefore; // Calculate CPU usage
+		System.out.println("CPU Time After :" + CPUtimeDifference);
 		
-		System.out.println("CPU Time : " + cputimeDifference);
+		num.close();
 	}	
 }
