@@ -8,11 +8,13 @@ public class Priority {
 		float averageWTime = 0, averageTATime = 0;
 		int waitingTime[],burstTime[],turnaroundTime[],priority[];
 		
-		System.out.println("==== Priority Scheduling =====\n");
-
+		System.out.println("------ Priority Scheduling -----\n");
+		
 		Scanner num = new Scanner(System.in);
-		System.out.println("Enter no of process"); 
-		n = num.nextInt(); //get the number of process
+		
+		//get the number of process
+		System.out.println("Enter no of process :"); 
+		n = num.nextInt(); 
 		
 		waitingTime = new int[n+1];
 		burstTime = new int[n+1];
@@ -26,7 +28,7 @@ public class Priority {
 			priority[i] = num.nextInt(); 
 		}
 		
-		long cputimeBefore = System.currentTimeMillis(); //Initialize the start time of CPU usage
+		float CPUtimeBefore = System.currentTimeMillis(); //Initialize the start time of CPU usage
 		
 		for(int i = 0; i < n; i++){
 			waitingTime[i]=0;
@@ -35,6 +37,8 @@ public class Priority {
 		
 		int temp;
 
+		
+		/*----- Priority Scheduling ---*/
 		
 		for(int i = 0; i < n; i++){
 			for(int j=0;j<n-1;j++){ 	
@@ -55,39 +59,44 @@ public class Priority {
 			}
 		}
 		
+		
+		//allocate the turn around time and the waiting time for each process
 		for(int i=0;i < n; i++){
-			turnaroundTime[i] = burstTime[i]+ waitingTime[i]; //allocate the turn around time for each process
-			waitingTime[i+1] = turnaroundTime[i];  //allocate the waiting time 
+			turnaroundTime[i] = burstTime[i]+ waitingTime[i]; 
+			waitingTime[i+1] = turnaroundTime[i];  
 		} 
 		turnaroundTime[n] = waitingTime[n]+ burstTime[n]; 
 		
+		
+		//calculate average waiting time
 		for(int j = 0; j < n; j++){
-			averageWTime += waitingTime[j]; //calculate average waiting time
+			averageWTime += waitingTime[j]; 
 		}
 		
+		
+		//calculate average waiting time
 		for(int j = 0; j < n; j++){
-			averageTATime += turnaroundTime[j]; //calculate average waiting time 
+			averageTATime += turnaroundTime[j];  
 		}
 		
-		System.out.println("\n====================== TABLE =========================");
+		System.out.println("\n-------------- TABLE --------------");
 
-		System.out.print(" ____________________________________________________\n");
-		System.out.println("| Process | BurstTime | WaitingTime | TurnAroundTime | Priority");	
+		System.out.println(" Process | BurstTime | WaitingTime | TurnAroundTime | Priority");	
 		
 		for(int i = 0; i < n; i++){
-			System.out.println("      "+ i +" \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]+"\t\t"+priority[i]);
+			System.out.println("     "+ i +"       \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]+"\t\t"+priority[i]);
 		}
 		
-		System.out.println("\n======================================================");
+		System.out.printf("\n\n1Average Turn Around Time:  %.2f \n ", averageWTime/n);
 		
-		System.out.println("Average Waiting Time "+ String.format("%.2f", (averageWTime = averageWTime/n)));
-		
-		System.out.println("Average Turn Around Time "+ String.format("%.2f", (averageTATime = averageTATime/n)));
+		System.out.printf("Average Turn Around Time:  %.2f \n", averageTATime/n);
 				
-		long cputimeAfter = System.currentTimeMillis(); //Get the end time of CPU usage during the program
+		//Get the end time of CPU usage during the program
+		float CPUtimeAfter = System.currentTimeMillis(); 
 		
-		long cputimeDifference = cputimeAfter - cputimeBefore; //calculate CPU usage
+		//calculate CPU usage
+		float CPUtimeDifference = CPUtimeAfter - CPUtimeBefore; 
 		
-		System.out.println("CPU Time After " + cputimeDifference);
+		System.out.println("CPU Time After :" + CPUtimeDifference);
 	}
 }
