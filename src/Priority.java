@@ -5,8 +5,8 @@ public class Priority {
 	public static void main (String args[]) {
 		
 		int number;
-		float averageWTime = 0, averageTATime = 0;
-		int waitingTime[],burstTime[],turnaroundTime[],priority[];
+		float averageWTime = 0, averageTATime = 0,TbTime=0;
+		int waitingTime[],burstTime[],turnaroundTime[],priority[],arrivalTime[],bTime[];
 		
 		System.out.println("------ Priority Scheduling -----\n");
 		
@@ -16,19 +16,25 @@ public class Priority {
 		System.out.println("Enter no of process :"); 
 		number = num.nextInt(); 
 		
-		waitingTime = new int[number+1];
-		burstTime = new int[number+1];
-		turnaroundTime = new int[number+1];
-		priority = new int[number+1];
+		waitingTime = new int[number];
+		burstTime = new int[number];
+		bTime = new int[number];
+		turnaroundTime = new int[number];
+		priority = new int[number];
+		arrivalTime = new int[number];
 		
 		for(int i = 0; i < number; i++){ //input the burst time for each processes
 			System.out.println("Enter the burst time for process " +(i+1)+":");
 			burstTime[i] = num.nextInt();
-			System.out.println("Enter the priority of process "+ (i+1) +":");
+			bTime[i]=burstTime[i];
+			TbTime+=burstTime[i];
+			System.out.println("Enter the arrival time for process " +(i+1)+":");
+			arrivalTime[i] = num.nextInt();
+			System.out.println("Enter the priority of process(highest priority 1 to infiity) "+ (i+1) +":");
 			priority[i] = num.nextInt(); 
 		}
 		
-		float CPUtimeBefore = System.currentTimeMillis(); //Initialize the start time of CPU usage
+		long CPUtimeBefore = System.currentTimeMillis(); //Initialize the start time of CPU usage
 		
 		for(int i = 0; i < number; i++){
 			waitingTime[i]=0;
@@ -42,60 +48,91 @@ public class Priority {
 		
 		for(int i = 0; i < number; i++){
 			for(int j=0;j<number-1;j++){ 	
-				if(priority[j]> priority[j+1]) {
-					temp = burstTime[j]; 	//process with less burst time, start first
+				
+				//compare processess's arrival time,if previous are more than next,swap
+				if(arrivalTime[j] > arrivalTime[j+1]){ 
+					temp = burstTime[j]; 	
 					burstTime[j] = burstTime[j+1]; 
 					burstTime[j+1] = temp; 
 					
-					temp = waitingTime[j]; 
-					waitingTime[j] = waitingTime[j+1]; //allocate the waiting time for each process  
-					waitingTime[j+1] = temp; 	//according to burst time
+					temp = arrivalTime[j]; 	
+					arrivalTime[j] = arrivalTime[j+1]; 
+					arrivalTime[j+1] = temp;
 					
-					temp = priority[j]; 
-					priority[j] = priority[j+1]; //allocate the waiting time for each process  
-					priority[j+1] = temp; 	//according to burst time
+					temp = bTime[j]; 	
+					bTime[j] = bTime[j+1]; 
+					bTime[j+1] = temp; 
 					
 				}
 			}
-		}
-		
-		
-		//allocate the turn around time and the waiting time for each process
-		for(int i=0;i < number; i++){
-			turnaroundTime[i] = burstTime[i]+ waitingTime[i]; 
-			waitingTime[i+1] = turnaroundTime[i];  
 		} 
-		turnaroundTime[number] = waitingTime[number]+ burstTime[number]; 
-		
-		
-		//calculate average waiting time
-		for(int j = 0; j < number; j++){
-			averageWTime += waitingTime[j]; 
+	
+	
+	int tempi=-1;
+	int tempp=-1;
+	int tempb=0;
+	int time =0;
+	
+	//while all process are not done
+	while(TbTime!=0) {
+		for(int i = 0; i < number; i++){
+			//Check for processes arrival time
+			if(time > arrivalTime[i]) {
+				//compare burst time of every process,the least burst time is prioritized
+				if( (tempb==0 || tempp==-1 || priority[i]<tempp)&& bTime[i]!=0 ) {
+					tempi=i;
+					tempp=priority[i];
+					tempb=bTime[i];
+				}
+				//if job completed don't add the waitingTime
+				if(bTime[i]!=0) 
+					waitingTime[i]++;				
+			}	
 		}
 		
-		
-		//calculate average waiting time
-		for(int j = 0; j < number; j++){
-			averageTATime += turnaroundTime[j];  
+		// process the highest priority job
+		if(tempi!= -1  && bTime[tempi]!=0) {
+			bTime[tempi]--;
+			waitingTime[tempi]--;
+			TbTime--;
+			tempb=bTime[tempi];
 		}
+		time++;
+	}
+
+	
+//allocate the turn around time and waiting time for each process
+	for(int i=0;i < number; i++){
+		turnaroundTime[i] = burstTime[i]+ waitingTime[i];   
+	} 
+	
+	//calculate average waiting time
+	for(int j = 0; j < number; j++){
+		averageWTime += waitingTime[j]; 
+	}
+	
+	 //calculate average waiting time 
+	for(int j = 0; j < number; j++){
+		averageTATime += turnaroundTime[j];
+	}
 		
 		System.out.println("\n-------------- TABLE --------------");
 
-		System.out.println(" Process | BurstTime | WaitingTime | TurnAroundTime | Priority");	
+		System.out.println(" Process | BurstTime | WaitingTime | TurnAroundTime | Priority | Arrival Time\n");	
 		
 		for(int i = 0; i < number; i++){
-			System.out.println("     "+ i +"       \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]+"\t\t"+priority[i]);
+			System.out.println("     "+ i +"       \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]+"\t\t"+priority[i]+"\t\t "+arrivalTime[i]);
 		}
 		
-		System.out.printf("\nAverage Turn Around Time:  %.2f \n", averageWTime/number);
+		System.out.printf("\nAverage Waiting Time:  %.2f \n", averageWTime/number);
 		
 		System.out.printf("Average Turn Around Time:  %.2f \n", averageTATime/number);
 				
 		//Get the end time of CPU usage during the program
-		float CPUtimeAfter = System.currentTimeMillis(); 
+		long CPUtimeAfter = System.currentTimeMillis(); 
 		
 		//calculate CPU usage
-		float CPUtimeDifference = CPUtimeAfter - CPUtimeBefore; 
+		long CPUtimeDifference = CPUtimeAfter - CPUtimeBefore; 
 		
 		System.out.println("CPU Time After :" + CPUtimeDifference);
 		
