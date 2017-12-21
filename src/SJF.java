@@ -59,7 +59,7 @@ public class SJF {
 				for(int j=0;j<number-1;j++){ 	
 					
 					//compare processess's arrival time,if previous are more than next,swap
-					if(arrivalTime[j] > arrivalTime[j+1]){ 
+					if(arrivalTime[j] >= arrivalTime[j+1]){ 
 						temp = burstTime[j]; 	
 						burstTime[j] = burstTime[j+1]; 
 						burstTime[j+1] = temp; 
@@ -98,10 +98,6 @@ public class SJF {
 				tempb=bTime[tempi];
 				waitingTime[tempi]--;
 				TbTime--;
-				System.out.println("Time"+time);
-				System.out.println("i:"+tempi);
-				System.out.println("Burst Time"+bTime[tempi]);
-				System.out.println("");
 			}
 			time++;
 		}

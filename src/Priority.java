@@ -78,7 +78,7 @@ public class Priority {
 	while(TbTime!=0) {
 		for(int i = 0; i < number; i++){
 			//Check for processes arrival time
-			if(time >= arrivalTime[i]) {
+			if(time > arrivalTime[i]) {
 				//compare burst time of every process,the least burst time is prioritized
 				if( (tempb==0 || tempp==-1 || priority[i]<tempp)&& bTime[i]!=0 ) {
 					tempi=i;
