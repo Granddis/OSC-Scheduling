@@ -100,8 +100,6 @@ public class RoundRobin {
 					waitingTime[i]++;				
 			}	
 		}
-		
-		
 		//if Task complete before the quantum number or quantum number consumed move to the next available node
 		if(qCounter==0 || bTime[ni]==0) {
 			tempi=ni;

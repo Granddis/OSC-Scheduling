@@ -39,6 +39,8 @@ public class FCFS {
 		int temp;
 		
 		/* First Come First Server(FCFS) Algorithm  */
+		
+		//sort the array according to arrival time
 		for(int i = 0; i < number; i++){
 			for(int j=0;j<number-1;j++){ 	
 				//compare processess's arrival time,if previous are more than next,swap

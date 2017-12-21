@@ -7,6 +7,10 @@ public class Priority {
 		int number;
 		float averageWTime = 0, averageTATime = 0,TbTime=0;
 		int waitingTime[],burstTime[],turnaroundTime[],priority[],arrivalTime[],bTime[];
+		int tempi=-1;
+		int tempp=-1;
+		int tempb=0;
+		int time =0;
 		
 		System.out.println("------ Priority Scheduling -----\n");
 		
@@ -45,7 +49,7 @@ public class Priority {
 
 		
 		/*----- Priority Scheduling ---*/
-		
+		//sort the array according to arrival time
 		for(int i = 0; i < number; i++){
 			for(int j=0;j<number-1;j++){ 	
 				
@@ -63,21 +67,18 @@ public class Priority {
 					bTime[j] = bTime[j+1]; 
 					bTime[j+1] = temp; 
 					
+					temp = priority[j]; 	
+					priority[j] = priority[j+1]; 
+					priority[j+1] = temp; 
+					
 				}
 			}
 		} 
-	
-	
-	int tempi=-1;
-	int tempp=-1;
-	int tempb=0;
-	int time =0;
-	
 	//while all process are not done
 	while(TbTime!=0) {
 		for(int i = 0; i < number; i++){
 			//Check for processes arrival time
-			if(time > arrivalTime[i]) {
+			if(time >= arrivalTime[i]) {
 				//compare burst time of every process,the least burst time is prioritized
 				if( (tempb==0 || tempp==-1 || priority[i]<tempp)&& bTime[i]!=0 ) {
 					tempi=i;

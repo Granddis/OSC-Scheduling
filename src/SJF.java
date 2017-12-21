@@ -8,6 +8,9 @@ public class SJF {
 		int number;
 		int waitingTime[], burstTime[], turnaroundTime[],arrivalTime[],bTime[];
 		float averageWTime = 0, averageTATime = 0;
+		int tempi=-1;
+		int tempb=0;
+		int time =0;
 		
 		System.out.println("----- Shortest Job First (SJF) -----\n"); 
 		
@@ -50,9 +53,8 @@ public class SJF {
 		
 		int temp; 
 		
-		/*  ------SJF Algorithm -----*/
-		
-			
+		/*  ------SJF-Preemptive Algorithm -----*/
+		//sort the array according to arrival time	
 		for(int i = 0; i < number; i++){
 				for(int j=0;j<number-1;j++){ 	
 					
@@ -70,15 +72,9 @@ public class SJF {
 						bTime[j] = bTime[j+1]; 
 						bTime[j+1] = temp; 
 						
-						
 					}
 				}
 			} 
-		
-		
-		int tempi=-1;
-		int tempb=0;
-		int time =0;
 		
 		//while all process are not done
 		while(TbTime!=0) {
