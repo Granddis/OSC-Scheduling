@@ -9,7 +9,7 @@ There are 4 different process scheduling Algorithm :
  
  4.Priority Scheduling
 
-To run the code:
+#To run the code:
 
  1.import this whole project into ur java IDE
  
