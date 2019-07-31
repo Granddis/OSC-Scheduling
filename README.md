@@ -1,4 +1,4 @@
-# G52OSC
+# OSC-Scheduling
 There are 4 different process scheduling Algorithm 
  1.FCFS
  2.SJF-Preemptive Version
